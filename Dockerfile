@@ -32,10 +32,9 @@ RUN apt-get update && \
 
 
 # Download Vagrant and its dependencies
-RUN VAGRANT_VERSION=$(curl -s https://checkpoint-api.hashicorp.com/v1/check/vagrant | jq -r -M '.current_version') && \
-    curl -LO "https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb" && \
-    dpkg -i "vagrant_${VAGRANT_VERSION}_x86_64.deb" && \
-    rm "vagrant_${VAGRANT_VERSION}_x86_64.deb"
+RUN curl -LO "https://releases.hashicorp.com/vagrant/2.4.1/vagrant_2.4.1-1_amd64.deb" && \
+    dpkg -i "vagrant_2.4.1-1_amd64.deb" && \
+    rm "vagrant_2.4.1-1_amd64.deb"
 
 # Install Vagrant plugins
 RUN vagrant plugin install vagrant-libvirt

@@ -1,5 +1,5 @@
 # Use a Windows base image
-FROM mcr.microsoft.com/windows:ltsc2019
+FROM mcr.microsoft.com/windows/servercore:ltsc2022
 
 # Set the working directory
 WORKDIR /app

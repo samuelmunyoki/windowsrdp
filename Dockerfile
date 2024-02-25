@@ -1,5 +1,5 @@
 # Use the Windows Nano Server base image
-FROM mcr.microsoft.com/windows/nanoserver:ltsc2022
+FROM docker pull mcr.microsoft.com/windows:ltsc2019-amd64
 
 # Set the working directory
 WORKDIR /app

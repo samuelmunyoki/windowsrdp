@@ -31,11 +31,21 @@ RUN apt-get update && \
     apt-get clean
 
 
-RUN curl -O https://releases.hashicorp.com/vagrant/$(curl -s https://checkpoint-api.hashicorp.com/v1/check/vagrant  | jq -r -M '.current_version')/vagrant_$(curl -s https://checkpoint-api.hashicorp.com/v1/check/vagrant  | jq -r -M '.current_version')_x86_64.deb && \
-	dpkg -i vagrant_$(curl -s https://checkpoint-api.hashicorp.com/v1/check/vagrant  | jq -r -M '.current_version')_x86_64.deb && \
-	vagrant plugin install vagrant-libvirt && \
-	vagrant box add --provider libvirt peru/windows-10-enterprise-x64-eval && \
-	vagrant init peru/windows-10-enterprise-x64-eval
+# Download Vagrant and its dependencies
+RUN VAGRANT_VERSION=$(curl -s https://checkpoint-api.hashicorp.com/v1/check/vagrant | jq -r -M '.current_version') && \
+    curl -LO "https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb" && \
+    dpkg -i "vagrant_${VAGRANT_VERSION}_x86_64.deb" && \
+    rm "vagrant_${VAGRANT_VERSION}_x86_64.deb"
+
+# Install Vagrant plugins
+RUN vagrant plugin install vagrant-libvirt
+
+# Add Vagrant box
+RUN vagrant box add --provider libvirt peru/windows-10-enterprise-x64-eval
+
+# Initialize Vagrant project
+RUN vagrant init peru/windows-10-enterprise-x64-eval
+
 
 COPY Vagrantfile /
 COPY startup.sh /

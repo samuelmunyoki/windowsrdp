@@ -1,5 +1,5 @@
 # Use a Windows base image
-FROM mcr.microsoft.com/windows:ltsc2019-amd64
+FROM mcr.microsoft.com/windows:10.0.17763.5458-amd64
 
 # Set the working directory
 WORKDIR /app
